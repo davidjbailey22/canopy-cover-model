@@ -9,20 +9,22 @@ from liblas import header
 import numpy
 #import pdal
 #from las_conversions import las_vars
+import arrays
 import las_functions
 
 def ccmodel():
 
     # input variables
-    dem = "/Users/davidbailey/repos/github/geo/canopy-cover-model/test_data/dem.geotiff"
-    dsm = "/Users/davidbailey/repos/github/geo/canopy-cover-model/test_data/dsm.geotiff"
-    point_cloud_bare = '/Users/davidbailey/repos/github/geo/canopy-cover-model/test_data/points.las'
-    point_cloud_first = ''
+    dem = "/Users/davidbailey/repos/github/geo/canopy-cover-model/temp_data/dem.geotiff"
+    dsm = "/Users/davidbailey/repos/github/geo/canopy-cover-model/temp_data/dsm.geotiff"
+    point_cloud_bare = '/Users/davidbailey/Desktop/Data/canopy_cover_data/point_clouds/points_ground.las'
+    point_cloud_first = '/Users/davidbailey/Desktop/Data/canopy_cover_data/point_clouds/points_firstreturn.las'
     naip = ""
     clip_boundary = ""
     rasterOrigin = (-123.25745, 45.43013)
-    pixelWidth = 10
-    pixelHeight = 10
+    pixelWidth = 1
+    pixelHeight = 1
+    nrows = las_functions.las_points(point_cloud_bare)
 
     ## create DEM from bare earth las points
 
@@ -30,13 +32,15 @@ def ccmodel():
     array = las_functions.las2narray(point_cloud_bare)
 
     # numpy array to geotiff (DEM)
-    las_functions.array2raster(dem, rasterOrigin, pixelWidth, pixelHeight, array)
+    arrays.array2raster(nrows, dem, rasterOrigin, pixelWidth, pixelHeight, array)
 
     ## create DSM from first return las points
 
     # las to numpy array
+    #array2 = las_functions.las2narray(point_cloud_first)
 
     # numpy array to geotiff (DSM)
+    #arrays.array2raster(nrows, dem, rasterOrigin, pixelWidth, pixelHeight, array2)
 
     # subtract DSM from DEM
 
